@@ -29,7 +29,7 @@ class QuestionsController < ApplicationController
       @question.delete
       redirect_to questions_path, notice: 'Your question successfully deleted.'
     else
-      redirect_to questions_path, alert: 'You do not have permission to delete the question!'
+      redirect_to questions_path
     end
   end
 
