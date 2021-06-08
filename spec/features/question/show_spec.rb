@@ -5,7 +5,7 @@ feature 'User can get question and list of answers' do
 
   background { create_list(:answer, 3, question: question) }
 
-  scenario 'User can visit page with question and all answers' do
+  scenario 'User can visit page with question and all answers', js: true do
     visit question_path(question)
 
     expect(page).to have_content question.title
