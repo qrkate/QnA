@@ -4,21 +4,21 @@ feature 'User can create answer' do
   given(:question) { create(:question) }
   given(:user) { create(:user) }
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', js: true do
 
     background do
       sign_in(user)
       visit question_path(question)
     end
 
-    scenario 'give an answer', js: true do
+    scenario 'give an answer' do
       fill_in 'Body', with: 'text text text'
       click_on 'Answer'
 
       expect(page).to have_content 'text text text'
     end
 
-    scenario 'give an answer with errors', js: true do
+    scenario 'give an answer with errors' do
       click_on 'Answer'
 
       expect(page).to have_content "Body can't be blank"
