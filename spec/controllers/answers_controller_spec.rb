@@ -33,7 +33,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #update' do
     before { login(user) }
-    
+
     let!(:answer) { create(:answer, question: question) }
 
     context 'with valid attributes' do
@@ -70,12 +70,12 @@ RSpec.describe AnswersController, type: :controller do
       before { login(answer.user) }
 
       it 'deletes the answer' do
-        expect { delete :destroy, params: { id: answer } }.to change(Answer, :count).by(-1)
+        expect { delete :destroy, params: { id: answer }, format: :js }.to change(Answer, :count).by(-1)
       end
 
-      it 'redirects to question' do
-        delete :destroy, params: { id: answer }
-        expect(response).to redirect_to question_path(answer.question)
+      it 'renders destroy template' do
+        delete :destroy, params: { id: answer }, format: :js
+        expect(response).to render_template :destroy
       end
     end
 
@@ -83,13 +83,13 @@ RSpec.describe AnswersController, type: :controller do
       before { login(create(:user)) }
 
       it 'not deletes the answer' do
-        expect { delete :destroy, params: { id: answer } }.to_not change(Answer, :count)
+        expect { delete :destroy, params: { id: answer }, format: :js }.to_not change(Answer, :count)
       end
 
-      it 'redirects to question' do
-        delete :destroy, params: { id: answer }
+      it 'renders destroy template' do
+        delete :destroy, params: { id: answer }, format: :js
 
-        expect(response).to redirect_to question_path(answer.question)
+        expect(response).to render_template :destroy
       end
     end
   end
