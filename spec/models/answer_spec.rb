@@ -1,15 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
+  let(:question) { create(:question) }
+  let!(:answer1) { create(:answer, question: question) }
+  let!(:answer2) { create(:answer, question: question) }
+
   it { should belong_to :user }
   it { should belong_to :question }
 
   it { should validate_presence_of :body }
 
   describe '.default_scope' do
-    let(:question) { create(:question) }
-    let!(:answer1) { create(:answer, question: question) }
-    let!(:answer2) { create(:answer, question: question) }
     before { answer2.best! }
 
     it 'should sort answers by best' do
@@ -18,11 +19,18 @@ RSpec.describe Answer, type: :model do
   end
 
   describe '#best!' do
-    let(:answer) { create(:answer) }
-    it 'makes answer the best' do
-      answer.best!
+    before { answer1.best! }
 
-      expect(answer).to be_best
+    it 'makes answer the best' do
+      expect(answer1).to be_best
+    end
+
+    it 'change the best answer' do
+      answer2.best!
+      answer1.reload
+
+      expect(answer1).to_not be_best
+      expect(answer2).to be_best
     end
   end
 end

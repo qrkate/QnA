@@ -22,7 +22,7 @@ class AnswersController < ApplicationController
 
   def best
     @question = @answer.question
-    if current_user.is_author?(@answer.question)
+    if current_user.is_author?(@question)
       @answer.best!
     end
   end
