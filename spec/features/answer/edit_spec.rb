@@ -28,7 +28,7 @@ I'd like ot be able to edit my answer
     scenario 'edits his answer' do
       within '.answers' do
         fill_in 'Your answer', with: 'edited answer'
-        click_on 'Save'
+        click_on 'Answer'
 
         expect(page).to_not have_content answer.body
         expect(page).to have_content 'edited answer'
@@ -39,12 +39,22 @@ I'd like ot be able to edit my answer
     scenario 'edits his answer with errors' do
       within '.answers' do
         fill_in 'Your answer', with: ''
-        click_on 'Save'
+        click_on 'Answer'
 
         expect(page).to have_content ''
         expect(page).to have_selector 'textarea'
       end
       expect(page).to have_content "Body can't be blank"
+    end
+
+    scenario 'edits his answer with attached file' do
+      within '.answers' do
+        attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'Answer'
+
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
+      end
     end
   end
 

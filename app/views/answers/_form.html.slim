@@ -1,0 +1,8 @@
+= form_with model: answer, local: false, class: this_class, html: this_html do |f|
+  p
+    = f.label :body, 'Your answer'
+    = f.text_area :body
+  p
+    = f.label :files
+    = f.file_field :files, multiple: true, direct_upload: true
+  p= f.submit 'Answer'

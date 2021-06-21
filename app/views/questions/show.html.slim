@@ -4,10 +4,7 @@
   = render @question
 
 .answer-errors
-= form_with model: [@question, @answer],  class: 'new-answer', local: false do |f|
-  p= f.label :body
-  p= f.text_area :body
-  p= f.submit 'Answer'
+= render 'answers/form', answer: [@question, @answer], this_class: 'new-answer', this_html: {}
 
 .answers
   = render @question.answers
