@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :find_question, only: [:show, :destroy]
+  before_action :find_question, only: [:show, :update, :destroy]
 
   def index
     @questions = Question.all
@@ -24,6 +24,10 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def update
+    @question.update(question_params)
+  end
+
   def destroy
     if current_user.is_author?(@question)
       @question.delete
@@ -35,10 +39,10 @@ class QuestionsController < ApplicationController
 
   private
   def find_question
-    @question = Question.find(params[:id])
+    @question = Question.with_attached_files.find(params[:id])
   end
 
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, files: [])
   end
 end
