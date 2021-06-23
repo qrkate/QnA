@@ -1,5 +1,9 @@
 h1= question.title
 p= question.body
+.links
+  p Links:
+  ul
+    = render question.links
 
 - if question.files.attached?
   = render partial: 'files/file', collection: question.files, as: :file

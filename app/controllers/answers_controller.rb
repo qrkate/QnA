@@ -35,9 +35,9 @@ class AnswersController < ApplicationController
 
   def answer_params
     if @answer && @answer.files.attached?
-      params.require(:answer).permit(:body)
+      params.require(:answer).permit(:body, links_attributes: [:name, :url])
     else
-      params.require(:answer).permit(:body, files: [])
+      params.require(:answer).permit(:body, files: [], links_attributes: [:name, :url])
     end
   end
 end
