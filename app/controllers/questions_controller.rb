@@ -47,9 +47,9 @@ class QuestionsController < ApplicationController
 
   def question_params
     if @question && @question.files.attached?
-      params.require(:question).permit(:title, :body, links_attributes: [:name, :url])
+      params.require(:question).permit(:title, :body, links_attributes: [:id, :name, :url, :_destroy])
     else
-      params.require(:question).permit(:title, :body, files: [], links_attributes: [:name, :url])
+      params.require(:question).permit(:title, :body, files: [], links_attributes: [:id, :name, :url, :_destroy])
     end
   end
 end

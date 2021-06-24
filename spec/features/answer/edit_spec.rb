@@ -8,7 +8,8 @@ I'd like ot be able to edit my answer
 
   given!(:user) { create(:user) }
   given!(:question) { create(:question) }
-  given!(:answer) { create(:answer, question: question, user: user) }
+  given(:link) { create(:link) }
+  given!(:answer) { create(:answer, question: question, user: user, links: [link]) }
 
   scenario 'Unauthenticated can not edit answer' do
     visit question_path(question)
@@ -54,6 +55,17 @@ I'd like ot be able to edit my answer
 
         expect(page).to have_link 'rails_helper.rb'
         expect(page).to have_link 'spec_helper.rb'
+      end
+    end
+
+    scenario 'can delete link' do
+      expect(page).to have_link link.name, href: link.url
+
+      within '.answers' do
+        click_on 'Delete link'
+        click_on 'Answer'
+
+        expect(page).to_not have_link link.name, href: link.url
       end
     end
   end
