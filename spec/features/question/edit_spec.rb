@@ -3,7 +3,8 @@ require 'rails_helper'
 feature 'User can edit his question' do
 
   given!(:user) { create(:user) }
-  given!(:question) { create(:question, user: user) }
+  given(:link) { create(:link) }
+  given!(:question) { create(:question, user: user, links: [link]) }
 
   scenario 'Unauthenticated can not edit question' do
     visit question_path(question)
@@ -52,6 +53,17 @@ feature 'User can edit his question' do
 
         expect(page).to have_link 'rails_helper.rb'
         expect(page).to have_link 'spec_helper.rb'
+      end
+    end
+
+    scenario 'can delete link' do
+      expect(page).to have_link link.name, href: link.url
+
+      within '.question' do
+        click_on 'Delete link'
+        click_on 'Ask'
+
+        expect(page).to_not have_link link.name, href: link.url
       end
     end
   end
