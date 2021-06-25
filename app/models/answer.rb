@@ -16,6 +16,7 @@ class Answer < ApplicationRecord
     self.transaction do
       question.answers.update_all(best: false)
       update!(best: true)
+      question.award.update!(user: user) unless question.award.nil?
     end
   end
 end

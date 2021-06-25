@@ -1,3 +1,6 @@
+- if question.award.present?
+  p= "You can get #{question.award.name} award"
+
 h1= question.title
 p= question.body
 - if question.links.present?
