@@ -25,6 +25,18 @@ feature 'User can mark answer as best' do
         expect(page).to have_link 'Best answer'
       end
     end
+
+    scenario 'marks answer as best with question award' do
+      create(:award, question: question)
+
+      within ("#answer-#{answer1.id}") do
+        click_on('Best answer')
+
+        expect(page).to have_content 'The best answer'
+        expect(page).to have_content "You win an award:"
+        expect(page).to_not have_link 'Best answer'
+      end
+    end
   end
 
   scenario 'Unauthenticated user does not mark as best' do

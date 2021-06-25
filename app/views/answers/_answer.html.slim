@@ -15,7 +15,9 @@ div id="answer-#{answer.id}"
 
   -if current_user&.is_author?(answer.question)
     -if answer.best == true
-      p= 'The best answer'
+      p= 'The best answer.'
+      -unless answer.question.award.nil?
+        = "You win an award: #{answer.question.award.name}"
     -else
       p= link_to 'Best answer', best_answer_path(answer), method: :patch, remote: true
 

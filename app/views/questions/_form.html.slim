@@ -14,4 +14,8 @@
       = render 'links/links_fields', f: link
     .links
       = link_to_add_association 'Add link', f, :links, partial: 'links/links_fields'
+  p Award:
+  p
+    = f.fields_for :award do |a|
+      = render 'awards/award_fields', f: a
   p= f.submit 'Ask'
