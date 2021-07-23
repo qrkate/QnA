@@ -12,8 +12,9 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import "cocoon-js-vanilla";
 
-import "./answers"
-import "./question"
+require ("./answers")
+require ("./question")
+require ("./rating")
 
 Rails.start()
 Turbolinks.start()
