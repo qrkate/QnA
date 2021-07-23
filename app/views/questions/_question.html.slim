@@ -11,6 +11,7 @@ p= question.body
 
 - if question.files.attached?
   = render partial: 'files/file', collection: question.files, as: :file
+= render 'votes/vote', resource: question
 
 = render 'form', question: question, this_class: 'hidden'
 
