@@ -41,6 +41,7 @@ module Voted
 
   def user_not_author
     return unless current_user&.is_author?(@votable)
+    
     render json: { message: "You can't vote!" }, status: :unprocessable_entity
   end
 
