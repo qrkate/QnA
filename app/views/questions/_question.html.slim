@@ -11,7 +11,12 @@ p= question.body
 
 - if question.files.attached?
   = render partial: 'files/file', collection: question.files, as: :file
-= render 'votes/vote', resource: question
+-if current_user && !current_user.is_author?(question)
+  = render 'votes/vote', resource: question
+  = render 'comments/form', resource: question
+.comments
+  - if @question.comments.present?
+    = render @question.comments
 
 = render 'form', question: question, this_class: 'hidden'
 

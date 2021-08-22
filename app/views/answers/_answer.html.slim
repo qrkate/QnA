@@ -8,8 +8,13 @@ div id="answer-#{answer.id}"
       ul
         = render answer.links
 
-  = render 'votes/vote', resource: answer    
+  -if current_user && !current_user.is_author?(answer)
+    = render 'votes/vote', resource: answer
+    = render 'comments/form', resource: answer
 
+  .comments
+    - if answer.comments.present?
+      = render answer.comments
 
   -if current_user&.is_author?(answer)
     p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }

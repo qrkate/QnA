@@ -1,19 +1,18 @@
--if current_user && !current_user.is_author?(resource)
-  .vote
-    = link_to '+', polymorphic_path(resource, action: :vote_for),
-                    method: :patch,
-                    data: { type: :json },
-                    remote: true
+.vote
+  = link_to '+', polymorphic_path(resource, action: :vote_for),
+                  method: :patch,
+                  data: { type: :json },
+                  remote: true
 
-    .rating id="#{resource.class.to_s.downcase}_#{resource.id}"
-      = resource.rating
+  .rating id="#{resource.class.to_s.downcase}_#{resource.id}"
+    = resource.rating
 
-    = link_to '-', polymorphic_path(resource, action: :vote_against),
-                    method: :patch,
-                    data: { type: :json },
-                    remote: true
+  = link_to '-', polymorphic_path(resource, action: :vote_against),
+                  method: :patch,
+                  data: { type: :json },
+                  remote: true
 
-    p= link_to 'Nullify', polymorphic_path(resource, action: :nullify),
-                          method: :patch,
-                          data: { type: :json },
-                          remote: true
+  p= link_to 'Nullify', polymorphic_path(resource, action: :nullify),
+                        method: :patch,
+                        data: { type: :json },
+                        remote: true

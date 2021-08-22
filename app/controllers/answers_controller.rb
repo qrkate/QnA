@@ -3,6 +3,7 @@ class AnswersController < ApplicationController
 
   before_action :authenticate_user!
   before_action :find_answer, only: [:update, :destroy, :best]
+  after_action :publish_answer, only: :create
 
   def create
     @question = Question.find(params[:question_id])
@@ -31,6 +32,18 @@ class AnswersController < ApplicationController
   end
 
   private
+  def publish_answer
+    return unless @answer.valid?
+
+    data = { answer: ApplicationController.render(
+                        partial: 'answers/answer_new',
+                        locals: { answer: @answer }
+                      ),
+            user_id: current_user.id }
+
+    QuestionChannel.broadcast_to(@answer.question, data)
+  end
+
   def find_answer
     @answer = Answer.find(params[:id])
   end
