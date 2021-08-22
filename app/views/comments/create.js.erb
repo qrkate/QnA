@@ -1,0 +1,4 @@
+<% if @comment.persisted? %>
+  $("#<%= @comment.commentable_type.underscore %>-<%= @comment.commentable_id %>").find(".comments").append("<%= j render @comment %>")
+  $(".new-comment").trigger('reset')
+<% end %>
