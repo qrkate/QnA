@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
   it_behaves_like 'votable'
-  
+  it_behaves_like 'commentable'
+
   let(:question) { create(:question) }
   let!(:answer1) { create(:answer, question: question) }
   let!(:answer2) { create(:answer, question: question) }
