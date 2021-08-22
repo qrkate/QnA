@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   it_behaves_like 'voted'
-  
+
   let(:question) { create(:question) }
   let(:user) { create(:user) }
 
@@ -21,6 +21,10 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
+    before { login(user) }
+
+    include_context :gon
+    
     before { get :show, params: { id: question } }
 
     it 'assigns the requested question to @question' do
@@ -37,6 +41,10 @@ RSpec.describe QuestionsController, type: :controller do
 
     it 'renders show view' do
       expect(response).to render_template :show
+    end
+
+    it 'set gon user id' do
+      expect(gon['user_id']).to eq user.id
     end
   end
 
