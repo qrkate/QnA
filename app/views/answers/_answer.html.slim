@@ -8,7 +8,7 @@ div id="answer-#{answer.id}"
       ul
         = render answer.links
 
-  -if current_user && !current_user.is_author?(answer)
+  -if can?(:all_vote_actions, answer)
     = render 'votes/vote', resource: answer
     = render 'comments/form', resource: answer
 
@@ -16,11 +16,12 @@ div id="answer-#{answer.id}"
     - if answer.comments.present?
       = render answer.comments
 
-  -if current_user&.is_author?(answer)
+  - if can?(:update, answer)
     p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+  - if can?(:destroy, answer)
     p= link_to 'Delete answer', answer_path(answer), method: :delete, remote: true
 
-  -if current_user&.is_author?(answer.question)
+  - if can?(:best, answer)
     -if answer.best == true
       p= 'The best answer.'
       -unless answer.question.award.nil?

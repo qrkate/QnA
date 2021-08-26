@@ -11,7 +11,7 @@ p= question.body
 
 - if question.files.attached?
   = render partial: 'files/file', collection: question.files, as: :file
--if current_user && !current_user.is_author?(question)
+-if can?(:all_vote_actions, question)
   = render 'votes/vote', resource: question
   = render 'comments/form', resource: question
 .comments
@@ -20,6 +20,7 @@ p= question.body
 
 = render 'form', question: question, this_class: 'hidden'
 
-- if current_user&.is_author?(question)
+- if can?(:destroy, question)
   p= link_to 'Delete question', question_path(question), method: :delete
+- if can?(:update, question)
   p= link_to 'Edit question', '#', class: 'edit-question-link', data: { question_id: question.id }
