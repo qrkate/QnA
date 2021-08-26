@@ -4,7 +4,8 @@ div.question id="question-#{@question.id}"
   = render @question
 
 .answer-errors
-= render 'answers/form', answer: [@question, @answer], this_class: 'new-answer', this_html: {}
+- if can?(:create, @answer)
+  = render 'answers/form', answer: [@question, @answer], this_class: 'new-answer', this_html: {}
 
 .answers
   = render @question.answers

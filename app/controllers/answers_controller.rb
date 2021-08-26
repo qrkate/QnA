@@ -5,6 +5,8 @@ class AnswersController < ApplicationController
   before_action :find_answer, only: [:update, :destroy, :best]
   after_action :publish_answer, only: :create
 
+  authorize_resource
+
   def create
     @question = Question.find(params[:question_id])
     @answer = @question.answers.new(answer_params)
@@ -19,16 +21,12 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if current_user.is_author?(@answer)
-      @answer.delete
-    end
+    @answer.delete
   end
 
   def best
     @question = @answer.question
-    if current_user.is_author?(@question)
-      @answer.best!
-    end
+    @answer.best!
   end
 
   private
