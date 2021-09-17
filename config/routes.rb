@@ -4,6 +4,18 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  namespace :api do
+    namespace :v1 do
+      resources :profiles, only: [:index] do
+        get :me, on: :collection
+      end
+
+      resources :questions, shallow: true, except: [:new] do
+        resources :answers, except: [:new]
+      end
+    end
+  end
+
   concern :voted do
     member do
       patch :vote_for

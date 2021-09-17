@@ -30,10 +30,12 @@ class Ability
 
     can :best, Answer, question: { user_id: user.id }
     can :destroy, ActiveStorage::Attachment, record: { user_id: user.id }
-    
+
     alias_action :vote_for, :vote_against, :nullify, to: :all_vote_actions
     can :all_vote_actions, [Question, Answer] do |votable|
       votable.user_id != user.id
     end
+
+    can :me, User, id: user.id
   end
 end
