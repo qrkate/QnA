@@ -7,5 +7,12 @@ div.question id="question-#{@question.id}"
 - if can?(:create, @answer)
   = render 'answers/form', answer: [@question, @answer], this_class: 'new-answer', this_html: {}
 
+.subscribe
+- if signed_in?
+  - if @question.subscribed?(current_user)
+    = link_to 'Unsubscribe', question_subscriptions_path(question_id: @question.id), method: :delete, remote: true
+  - else
+    = link_to 'Subscribe', question_subscriptions_path(question_id: @question.id), method: :post, remote: true
+
 .answers
   = render @question.answers
