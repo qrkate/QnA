@@ -30,6 +30,7 @@ describe Ability do
       it { should be_able_to :create, Question }
       it { should be_able_to :create, Answer }
       it { should be_able_to :create, Comment }
+      it { should be_able_to :create, Subscription }
     end
 
     context 'update abilities' do
@@ -48,6 +49,7 @@ describe Ability do
       it { should_not be_able_to :destroy, create(:answer, user: other) }
 
       it { should be_able_to :destroy, ActiveStorage::Attachment }
+      it { should be_able_to :destroy, Subscription }
     end
 
     context 'other abilities' do
